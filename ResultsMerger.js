@@ -1,13 +1,6 @@
+var extractor = require('./DespegarExtractor.js');
 module.exports = {
-    merge: function(list) {
-        if (list === undefined) {
-            return []
-        } else {
-            if (typeof(list) == 'string') {
-                return list;
-            } else {
-                return list[0];
-            }
-        }
-    }
+    merge: function(response) {
+        return extractor.extract(response);
+    },
 }
