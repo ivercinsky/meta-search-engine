@@ -16,7 +16,7 @@ server.route([{
     method:'GET',
     path:'/',
     handler: function(request, reply) {
-        reply("Corriengo Ok");
+        reply("Corriengo Ok", process.env.WEBSITE_NODE_DEFAULT_VERSION);
     }
 },{
     method:'GET',
