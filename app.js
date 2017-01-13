@@ -36,6 +36,23 @@ server.route([{
             reply(response);
         });
     }
+},{
+    method:'POST',
+    path:'/{p*}',
+    handler: function(request, reply) {
+        console.log(request.payload.result);
+        var req = JSON.parse(request.payload.result);
+        var params = req.parameters;
+        console.log(params);
+        var response = {
+            speech: "conexion exitosa",
+            displayText: "conexion exitosa --> " + JSON.stringify(params),
+            data: {},
+            contextOut:[],
+            source:"MetaSearchEngine"
+        }
+        return reply(response).header('Content-type','application/json');
+    }
 }]);
 
 // Start the server
