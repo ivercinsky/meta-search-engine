@@ -76,14 +76,14 @@ var checkDescription = function(country) {
     var desc = country.descriptions.es;
     var desc = formatearDesc(desc);
     var thisDesc = formatearDesc(this);
-    return levenshtein(desc, thisDesc) < 3;
+    return levenshtein(desc, thisDesc) < 2;
 }
 var checkDescriptionAndCountryId = function(city) {
     var desc = city.descriptions.es;
     var desc = formatearDesc(desc);
     var thisDesc = formatearDesc(this.desc);
     var countryId = city.country_id;
-    return countryId == this.country_id && levenshtein(desc, thisDesc) < 3;
+    return countryId == this.country_id && levenshtein(desc, thisDesc) < 2;
 }
 
 var lookCityCode = function(cityDesc, countryID) {
