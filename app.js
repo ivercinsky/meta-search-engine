@@ -7,8 +7,8 @@ console.log("USANDO API_KEY", process.env.DESPEGAR_API, "para comunicarme con De
 
 const server = new Hapi.Server();
 server.connection({ 
-    host: 'localhost', 
-    port: 8000 
+    host: process.env.HOST || 'localhost', 
+    port: process.env.PORT || 8000 
 });
 
 
