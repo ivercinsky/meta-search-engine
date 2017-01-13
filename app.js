@@ -44,8 +44,9 @@ server.route([{
         var req = request.payload.result;
         var params = req.parameters;
         console.log(params);
+        var speech = "Buscando vuelos para " + params.toC + ", " + params.to + " volando el " + params['departure-date'] + " y regresando el " + params['return-date'] + " para " + params.adultos + " adultos y " + params.children + " menores.";  
         var response = {
-            speech: "conexion exitosa",
+            speech: speech,
             displayText: "conexion exitosa --> " + JSON.stringify(params),
             data: {},
             contextOut:[],
