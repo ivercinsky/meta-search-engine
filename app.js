@@ -41,7 +41,7 @@ server.route([{
     path:'/{p*}',
     handler: function(request, reply) {
         console.log(request.payload.result);
-        //var req = JSON.parse(request.payload.result);
+        var req = request.payload.result;
         var params = req.parameters;
         console.log(params);
         var response = {
