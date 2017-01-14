@@ -1,6 +1,5 @@
 var Selector = require("./SearchEngineSelector.js");
 var ResultsMerger = require("./ResultsMerger.js");
-var dummyResponse = require("./dummyResponse.json");
 const Hapi = require('hapi');
 
 //console.log(process.argv);
@@ -49,7 +48,7 @@ server.route([{
         Selector.search(params).then(function(response) {
             var speech = ResultsMerger.merge(response);
             var data = {
-                speech: JSON.stringify(dummyResponse),
+                speech: speech,
                 displayText: "conexion exitosa --> " + JSON.stringify(params),
                 data: {},
                 contextOut:[],
