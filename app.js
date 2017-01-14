@@ -49,7 +49,7 @@ server.route([{
         Selector.search(params).then(function(response) {
             var speech = ResultsMerger.merge(response);
             var data = {
-                speech: dummyResponse,
+                speech: JSON.stringify(dummyResponse),
                 displayText: "conexion exitosa --> " + JSON.stringify(params),
                 data: {},
                 contextOut:[],
