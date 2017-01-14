@@ -1,5 +1,6 @@
 var Selector = require("./SearchEngineSelector.js");
 var ResultsMerger = require("./ResultsMerger.js");
+var dummyResponse = require("./dummyResponse.json");
 const Hapi = require('hapi');
 
 //console.log(process.argv);
@@ -47,6 +48,16 @@ server.route([{
         //var speech = "Buscando vuelos para " + params.toC + ", " + params.to + " volando el " + params['departure-date'] + " y regresando el " + params['return-date'] + " para " + params.adultos + " adultos y " + params.children + " menores.";  
         Selector.search(params).then(function(response) {
             var speech = ResultsMerger.merge(response);
+            var data = {
+                speech: dummyResponse,
+                displayText: "conexion exitosa --> " + JSON.stringify(params),
+                data: {},
+                contextOut:[],
+                source:"MetaSearchEngine"
+            }
+            return reply(data).header('Content-type','application/json');
+        }, function(error) {
+            var speech = error
             var data = {
                 speech: speech,
                 displayText: "conexion exitosa --> " + JSON.stringify(params),
