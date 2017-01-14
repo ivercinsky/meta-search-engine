@@ -40,19 +40,22 @@ server.route([{
     method:'POST',
     path:'/{p*}',
     handler: function(request, reply) {
-        console.log(request.payload.result);
         var req = request.payload.result;
         var params = req.parameters;
         console.log(params);
-        var speech = "Buscando vuelos para " + params.toC + ", " + params.to + " volando el " + params['departure-date'] + " y regresando el " + params['return-date'] + " para " + params.adultos + " adultos y " + params.children + " menores.";  
-        var response = {
-            speech: speech,
-            displayText: "conexion exitosa --> " + JSON.stringify(params),
-            data: {},
-            contextOut:[],
-            source:"MetaSearchEngine"
-        }
-        return reply(response).header('Content-type','application/json');
+        
+        //var speech = "Buscando vuelos para " + params.toC + ", " + params.to + " volando el " + params['departure-date'] + " y regresando el " + params['return-date'] + " para " + params.adultos + " adultos y " + params.children + " menores.";  
+        Selector.search(params).then(function(response) {
+            var speech = ResultsMerger.merge(response);
+            var data = {
+                speech: speech,
+                displayText: "conexion exitosa --> " + JSON.stringify(params),
+                data: {},
+                contextOut:[],
+                source:"MetaSearchEngine"
+            }
+            return reply(data).header('Content-type','application/json');
+        });
     }
 }]);
 
