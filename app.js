@@ -42,6 +42,7 @@ server.route([{
     method:'POST',
     path:'/vuelos',
     handler: function(request, reply) {
+        console.log("Buscando VUELOs");
         var req = request.payload.result;
         var params = req.parameters;
         console.log(params);
