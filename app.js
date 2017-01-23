@@ -39,13 +39,6 @@ server.route([{
         });
     }
 }, {
-    method: 'POST',
-    path: '/',
-    handler: function(request, reply) {
-        console.log("ENTRO SIN ACTION");
-        return reply("NO MANDO EL ACTION")
-    }
-}, {
     method:'POST',
     path:'/vuelos',
     handler: function(request, reply) {
@@ -75,6 +68,13 @@ server.route([{
             }
             return reply(data).header('Content-type','application/json');
         });
+    }
+}, {
+    method: 'POST',
+    path: '/',
+    handler: function(request, reply) {
+        console.log("ENTRO SIN ACTION");
+        return reply("NO MANDO EL ACTION").header('Content-type','application/json');
     }
 }]);
 
