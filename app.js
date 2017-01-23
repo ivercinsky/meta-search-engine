@@ -14,13 +14,18 @@ server.connection({
     port: process.env.PORT || 8000 
 });
 
+
+server.register(require('inert'), function() {
+    server.route({
+        method:'GET',
+        path:'/',
+        handler: function(request, reply) {
+            reply.file("./index.html");
+        }
+    });
+});
+
 server.route([{
-    method:'GET',
-    path:'/',
-    handler: function(request, reply) {
-        reply("Corriengo Ok", process.env.WEBSITE_NODE_DEFAULT_VERSION);
-    }
-},{
     method:'GET',
     path:'/favicon.ico',
     handler: function(request, reply) {
