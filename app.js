@@ -48,21 +48,11 @@ server.route([{
         console.log(params);
         
         Selector.search(params).then(function(response) {
-            var speech = ResultsMerger.merge(response);
+            var search = ResultsMerger.merge(response);
             var data = {
-                speech: speech,
+                speech: "Estos son los resueltados que encontre!",
                 displayText: "conexion exitosa --> " + JSON.stringify(params),
-                data: {},
-                contextOut:[],
-                source:"MetaSearchEngine"
-            }
-            return reply(data).header('Content-type','application/json');
-        }, function(error) {
-            var speech = error
-            var data = {
-                speech: speech,
-                displayText: "conexion exitosa --> " + JSON.stringify(params),
-                data: {},
+                data: { "search": search},
                 contextOut:[],
                 source:"MetaSearchEngine"
             }
