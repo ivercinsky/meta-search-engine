@@ -2,7 +2,7 @@ module.exports = {
     extract : function(body) {
         console.log(body);
         var response = [];
-        return body;
+        return JSON.stringify(body);
 /*        var body = JSON.parse(body);
         body.items.forEach(function(item) {
             var data = {};
