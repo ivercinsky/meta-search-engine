@@ -1,16 +1,18 @@
-var Selector = require("./SearchEngineSelector.js");
-var ResultsMerger = require("./ResultsMerger.js");
+'use strict';
+
+const Selector = require("./SearchEngineSelector.js");
+const ResultsMerger = require("./ResultsMerger.js");
 const Hapi = require('hapi');
 
 //console.log(process.argv);
-console.log("USANDO API_KEY", process.env.DESPEGAR_API, "para comunicarme con Despegar.com"); 
+console.log("USANDO DESPEGAR_API_TOKEN", process.env.DESPEGAR_API_TOKEN, "para comunicarme con Despegar.com"); 
 
 const server = new Hapi.Server();
+
 server.connection({ 
     host: process.env.HOST || 'localhost', 
     port: process.env.PORT || 8000 
 });
-
 
 server.route([{
     method:'GET',
@@ -38,13 +40,12 @@ server.route([{
     }
 },{
     method:'POST',
-    path:'/{p*}',
+    path:'/vuelos',
     handler: function(request, reply) {
         var req = request.payload.result;
         var params = req.parameters;
         console.log(params);
         
-        //var speech = "Buscando vuelos para " + params.toC + ", " + params.to + " volando el " + params['departure-date'] + " y regresando el " + params['return-date'] + " para " + params.adultos + " adultos y " + params.children + " menores.";  
         Selector.search(params).then(function(response) {
             var speech = ResultsMerger.merge(response);
             var data = {

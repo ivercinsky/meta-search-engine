@@ -2,7 +2,8 @@ module.exports = {
     extract : function(body) {
         console.log(body);
         var response = [];
-        var body = JSON.parse(body);
+        return body;
+/*        var body = JSON.parse(body);
         body.items.forEach(function(item) {
             var data = {};
             data.id = item.id;
@@ -34,6 +35,6 @@ module.exports = {
             htmlResponse+="</tr>";
         }, this);
         htmlResponse+="</table>";
-        return htmlResponse;
+        return htmlResponse;*/
     }
 };
