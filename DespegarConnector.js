@@ -5,7 +5,7 @@ var despegarURI = "https://api.despegar.com/v3/flights"
 
 var despegarRequest = request.defaults({
     headers : {
-        'X-ApiKey' : process.env.DESPEGAR_API,
+        'X-ApiKey' : process.env.DESPEGAR_API_TOKEN,
         'Accept': 'application/json',
     }
 });
