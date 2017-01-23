@@ -38,7 +38,14 @@ server.route([{
             reply(response);
         });
     }
-},{
+}, {
+    method: 'POST',
+    path: '/',
+    handler: function(request, reply) {
+        console.log("ENTRO SIN ACTION");
+        return reply("NO MANDO EL ACTION")
+    }
+}, {
     method:'POST',
     path:'/vuelos',
     handler: function(request, reply) {
