@@ -69,6 +69,7 @@ server.route([{
     method: 'POST',
     path: '/',
     handler: function(request, reply) {
+        console.log(request);
         console.log("ENTRO SIN ACTION");
         return reply("NO MANDO EL ACTION").header('Content-type','application/json');
     }
