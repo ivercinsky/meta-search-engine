@@ -30,6 +30,10 @@ var apiaiReq = request.defaults({
         'Authorization': 'Bearer ' + process.env.APIAI_TOKEN,
     }
 });
+
+var skypeBot = request.defaults({
+
+})
 app.post('/', function (request, response) {
     var req = request.body.result;
     console.log("Recibi llamada con action", request.body.result.action);
@@ -40,7 +44,7 @@ app.post('/', function (request, response) {
             // LLAMADA A API.AI CON EL EVENTO DE MOSTRAR RESULTADOS Y ESTE DATA..
             var options = {
                 method: 'POST',
-                uri: 'https://api.api.ai/v1/query',
+                uri: 'https://api.api.ai/api/query?v=20150910',
                 body: {
                     event: {
                         name: process.env.RESULTADOS_EVENT_NAME,
