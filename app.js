@@ -15,24 +15,25 @@ var jsonParser = bodyParser.json();
 
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
-
+app.use(function(req, res, next) {
+  res.setHeader('Content-type', 'application/json')
+  next();
+});
 app.get('/favicon.ico',function(request, response) {
         response.send("hola");
     
 });
 app.post('/', function(request, response) {
-    console.log(request.body);
     var req = request.body.result;
     if (req.action == "buscar_vuelos") {
         var params = req.parameters;
-        console.log(request);
         response.send({
             speech: "Buscando vuelos...",
             displayText: "Buscando vuelos...",
             data: {},
             contextOut:[],
             source:"MetaSearchEngine"
-        }).header('Content-type','application/json');
+        })
         Selector.search(params).then(function(response) {
             var search = ResultsMerger.merge(response);
             // LLAMADA A API.AI CON EL EVENTO DE MOSTRAR RESULTADOS Y ESTE DATA..
