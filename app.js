@@ -53,7 +53,7 @@ app.post('/', function (request, response) {
                 json: true // Automatically stringifies the body to JSON
             };
             apiaiReq.post(options).then(function (resp) {
-                //console.log(resp);
+                console.log("llamando a APIAI con resultados");
             });
         });
         return response.send({
@@ -72,7 +72,8 @@ app.post('/', function (request, response) {
             displayText: "Esto es lo que encontré",
             data : {"search":resultados},
             contextOut : [],
-            source: "Resultados"
+            source: "Resultados",
+            sessionId: request.body.sessionId
         });
     } else {
         console.log("No entro en ninga action");
