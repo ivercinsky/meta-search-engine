@@ -1,6 +1,6 @@
 module.exports = {
     extract : function(body) {
-        console.log(body);
+        //console.log(body);
         var response = [];
         return JSON.stringify(body);
 /*        var body = JSON.parse(body);
