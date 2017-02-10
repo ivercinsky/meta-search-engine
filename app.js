@@ -86,7 +86,7 @@ app.post('/', function (request, response) {
             data : {"search":resultados},
             contextOut : [],
             source: "Resultados",
-            sessionId: sessionsIds.get(request.body.sessionId);
+            sessionId: sessionsIds.get(request.body.sessionId)
         });
     } else {
         console.log("No entro en ninga action");
