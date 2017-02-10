@@ -50,8 +50,8 @@ app.post('/', function (request, response) {
                 },
                 json: true // Automatically stringifies the body to JSON
             };
-            apiaiReq.post(options).then(function (response) {
-                console.log(response);
+            apiaiReq.post(options).then(function (resp) {
+                console.log(resp);
             });
             return response.send({
                 speech: "Buscando vuelos...",
