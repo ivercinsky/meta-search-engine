@@ -34,8 +34,8 @@ app.post('/', function (request, response) {
     var req = request.body.result;
     if (req.action == "buscar_vuelos") {
         var params = req.parameters;
-        Selector.search(params).then(function (response) {
-            var search = ResultsMerger.merge(response);
+        Selector.search(params).then(function (data) {
+            var search = ResultsMerger.merge(data);
             // LLAMADA A API.AI CON EL EVENTO DE MOSTRAR RESULTADOS Y ESTE DATA..
             var options = {
                 method: 'POST',
@@ -64,6 +64,7 @@ app.post('/', function (request, response) {
             source: "MetaSearchEngine"
         })
     } else if (req.action == "mostrar_resultados") {
+        console.log("Enviando Resultados");
         var params = req.parameters;
         var resultados = JSON.parse(params.search);
         return response.send({
