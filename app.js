@@ -53,15 +53,14 @@ app.post('/', function (request, response) {
             apiaiReq.post(options).then(function (resp) {
                 console.log(resp);
             });
-            return response.send({
-                speech: "Buscando vuelos...",
-                displayText: "Buscando vuelos...",
-                data: {},
-                contextOut: [],
-                source: "MetaSearchEngine"
-            })
-
         });
+        return response.send({
+            speech: "Buscando vuelos...",
+            displayText: "Buscando vuelos...",
+            data: {},
+            contextOut: [],
+            source: "MetaSearchEngine"
+        })
     } else {
         console.log(request.body.result);
     }
