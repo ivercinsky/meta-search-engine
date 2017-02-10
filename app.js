@@ -32,6 +32,7 @@ var apiaiReq = request.defaults({
 });
 app.post('/', function (request, response) {
     var req = request.body.result;
+    console.log("Recibi llamada con action", request.body.result.action);
     if (req.action == "buscar_vuelos") {
         var params = req.parameters;
         Selector.search(params).then(function (data) {
