@@ -53,7 +53,7 @@ app.post('/', function (request, response) {
                 json: true // Automatically stringifies the body to JSON
             };
             apiaiReq.post(options).then(function (resp) {
-                console.log(resp);
+                //console.log(resp);
             });
         });
         return response.send({
@@ -75,7 +75,8 @@ app.post('/', function (request, response) {
             source: "Resultados"
         });
     } else {
-        console.log(request.body.result);   
+        console.log("No entro en ninga action");
+        //console.log(request.body.result);   
     }
 
 });
