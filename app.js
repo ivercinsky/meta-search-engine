@@ -34,10 +34,16 @@ var apiaiReq = request.defaults({
 var skypeBot = request.defaults({
 
 })
+
+var sessionsIds = new Map();
+
 app.post('/', function (request, response) {
     var req = request.body.result;
     console.log("Recibi llamada con action", request.body.result.action);
     if (req.action == "buscar_vuelos") {
+        if(!sessionsIds.has(request.body.sessionId)) {
+            sessionsIds.set(request.body.sessionId, request.body.sessionId);
+        }
         var params = req.parameters;
         Selector.search(params).then(function (data) {
             var search = ResultsMerger.merge(data);
@@ -53,7 +59,7 @@ app.post('/', function (request, response) {
                         }
                     },
                     lang: 'es',
-                    sessionId: request.body.sessionId
+                    sessionId: sessionsIds.get(request.body.sessionId);
                 },
                 json: true // Automatically stringifies the body to JSON
             };
@@ -80,7 +86,7 @@ app.post('/', function (request, response) {
             data : {"search":resultados},
             contextOut : [],
             source: "Resultados",
-            sessionId: request.body.sessionId
+            sessionId: sessionsIds.get(request.body.sessionId);
         });
     } else {
         console.log("No entro en ninga action");
