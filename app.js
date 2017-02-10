@@ -59,7 +59,7 @@ app.post('/', function (request, response) {
                         }
                     },
                     lang: 'es',
-                    sessionId: sessionsIds.get(request.body.sessionId);
+                    sessionId: sessionsIds.get(request.body.sessionId)
                 },
                 json: true // Automatically stringifies the body to JSON
             };
