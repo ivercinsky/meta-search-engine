@@ -23,7 +23,7 @@ var buscarVuelos = function(paisorigen, origen, paisDestino, destino, desde, has
     var TocityCode = LocationCtrl.findCityCode(paisDestino, destino);
     console.log(FromcityCode);
     console.log(TocityCode);
-    var query = "?site=ar&from="+FromcityCode+"&to="+TocityCode+"&departure_date="+desde+"&return_date="+hasta+"&adults="+adultos+"&children="+menores+"&limit=5";
+    var query = "?site=ar&from="+FromcityCode+"&to="+TocityCode+"&departure_date="+desde+"&return_date="+hasta+"&adults="+adultos+"&children="+menores+"&limit=1";
     var url = despegarURI + method + query;
     return despegarRequest.get(url);
 }
