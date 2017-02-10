@@ -55,8 +55,9 @@ app.post('/', function (request, response) {
             };
             console.log("llamando a APIAI con resultados");
             apiaiReq.post(options).then(function (resp) {
-                console.log(resp.body);
+                console.log(resp);
             });
+
         });
         return response.send({
             speech: "Buscando vuelos...",
