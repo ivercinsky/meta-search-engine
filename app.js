@@ -63,8 +63,18 @@ app.post('/', function (request, response) {
             contextOut: [],
             source: "MetaSearchEngine"
         })
+    } else if (req.action == "mostrar_resultados") {
+        var params = req.parameters;
+        var resultados = JSON.parse(params.search);
+        return response.send({
+            speech: "Esto es lo que encontré",
+            displayText: "Esto es lo que encontré",
+            data : {"search":resultados},
+            contextOut : [],
+            source: "Resultados"
+        });
     } else {
-        console.log(request.body.result);
+        console.log(request.body.result);   
     }
 
 });
