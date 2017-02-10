@@ -74,7 +74,8 @@ app.post('/', function (request, response) {
             displayText: "Buscando vuelos...",
             data: {},
             contextOut: [],
-            source: "MetaSearchEngine"
+            source: "MetaSearchEngine",
+            sessionId: sessionsIds.get(request.body.sessionId)
         })
     } else if (req.action == "mostrar_resultados") {
         console.log("Enviando Resultados");
