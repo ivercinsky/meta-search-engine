@@ -46,7 +46,9 @@ app.post('/', function (request, response) {
                         data: {
                             search: search
                         }
-                    }
+                    },
+                    lang: 'es',
+                    sessionId: request.body.sessionId
                 },
                 json: true // Automatically stringifies the body to JSON
             };
