@@ -53,8 +53,9 @@ app.post('/', function (request, response) {
                 },
                 json: true // Automatically stringifies the body to JSON
             };
+            console.log("llamando a APIAI con resultados");
             apiaiReq.post(options).then(function (resp) {
-                console.log("llamando a APIAI con resultados");
+                console.log(resp.body);
             });
         });
         return response.send({
