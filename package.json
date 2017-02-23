@@ -19,6 +19,7 @@
     "hapi": "^16.1.0",
     "inert": "^4.1.0",
     "lodash": "^4.17.4",
+    "morgan": "^1.8.1",
     "node-uuid": "^1.4.7",
     "request": "^2.79.0",
     "request-promise": "^4.1.1",

@@ -5,7 +5,8 @@ const ResultsMerger = require("./ResultsMerger.js");
 const express = require('express');
 const bodyParser = require('body-parser');
 const request = require('request-promise');
-
+const morgan = require('morgan');
+const APIAI = require('./apiai.js');
 //console.log(process.argv);
 console.log("USANDO DESPEGAR_API_TOKEN", process.env.DESPEGAR_API_TOKEN, "para comunicarme con Despegar.com");
 
@@ -16,6 +17,7 @@ var jsonParser = bodyParser.json();
 
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
+app.use(morgan('tiny'));
 app.use(function (req, res, next) {
     res.setHeader('Content-type', 'application/json')
     next();
@@ -25,23 +27,38 @@ app.get('/favicon.ico', function (request, response) {
 
 });
 
-var apiaiReq = request.defaults({
-    headers: {
-        'Authorization': 'Bearer ' + process.env.APIAI_TOKEN,
-    }
-});
+//tener un archivo con las llamadas a api.ai
+//tener un archivo con las llamadas a Despegar.
 
-var skypeBot = request.defaults({
 
-})
+
+
 
 var sessionsIds = new Map();
 
+function sendBack(data, response) {
+    console.log(data);
+    response.send(data.result.fulfillment.speech);
+}
+
+app.get('/chat', function (request, response) {
+    console.log(request.query);
+    var msg = request.query.chat || '';
+    APIAI.query(msg, 1).then(function (data) {
+        sendBack(data, response);
+    });
+});
+app.get("/getEvent", function (request, response) {
+    var event = request.query.event || '';
+    APIAI.queryWithEvent(event, 1).then(function (data) {
+        sendBack(data, response);
+    });
+});
 app.post('/', function (request, response) {
     var req = request.body.result;
     console.log("Recibi llamada con action", request.body.result.action);
     if (req.action == "buscar_vuelos") {
-        if(!sessionsIds.has(request.body.sessionId)) {
+        if (!sessionsIds.has(request.body.sessionId)) {
             sessionsIds.set(request.body.sessionId, request.body.sessionId);
         }
         var params = req.parameters;
@@ -84,8 +101,8 @@ app.post('/', function (request, response) {
         return response.send({
             speech: "Esto es lo que encontré",
             displayText: "Esto es lo que encontré",
-            data : {"search":resultados},
-            contextOut : [],
+            data: { "search": resultados },
+            contextOut: [],
             source: "Resultados",
             sessionId: sessionsIds.get(request.body.sessionId)
         });
@@ -97,5 +114,5 @@ app.post('/', function (request, response) {
 });
 
 app.listen(process.env.PORT || 3000, function () {
-    console.log('Example app listening on port0', process.env.PORT || 3000, '!');
+    console.log('Example app listening on port', process.env.PORT || 3000, '!');
 });
