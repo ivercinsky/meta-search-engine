@@ -1,4 +1,5 @@
 const request = require('request-promise');
+
 var apiaiReq = request.defaults({
     headers: {
         'Authorization': 'Bearer ' + process.env.APIAI_TOKEN,
@@ -20,24 +21,16 @@ const query = function (msg, id) {
         },
         json: true // Automatically stringifies the body to JSON
     };
-    console.log("llamando a APIAI", msg, id);
     return apiaiReq.post(options);
-    /*apiaiReq.post(options).then(function (resp) {
-        console.log(resp);
-    });*/
 }
 
-const queryWithEvent = function (event, id) {
-    var myprofile = {
-        name : "Ivan",
-        lastname : "Vercinsky"
-    }
+const queryWithEvent = function (event, data, id) {
     var options = {
        body: {
             event: {
                 name: event,
                 data: {
-                    profile : myprofile
+                    data : data
                 }
             },
             lang: 'es',

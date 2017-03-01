@@ -24,21 +24,26 @@ app.use(function (req, res, next) {
 });
 app.get('/favicon.ico', function (request, response) {
     response.send("hola");
-
 });
 
 //tener un archivo con las llamadas a api.ai
 //tener un archivo con las llamadas a Despegar.
 
 
-
+var printContexts = function(result) {
+    result.contexts.forEach(function(context, index){
+        console.log(context);
+    });
+}
 
 
 var sessionsIds = new Map();
 
 function sendBack(data, response) {
     console.log(data);
-    response.send(data.result.fulfillment.speech);
+    printContexts(data.result);   
+    response.send(data.result);
+
 }
 
 app.get('/chat', function (request, response) {
@@ -50,10 +55,35 @@ app.get('/chat', function (request, response) {
 });
 app.get("/getEvent", function (request, response) {
     var event = request.query.event || '';
-    APIAI.queryWithEvent(event, 1).then(function (data) {
+    var profile = {
+        name : "Ivan",
+        lastname : "Vercinsky"
+    };
+    APIAI.queryWithEvent(event, profile, 1).then(function (data) {
         sendBack(data, response);
     });
 });
+
+//CALL HECHO DESDE SKYPEBOT
+//ME MANDA EL MENSAJE DESDE SKYPE Y EL SESSION ID.
+app.post('/chat', function(request, response){
+
+    //SIEMPRE CALL A APIAI QUERY...LUEGO SWITCH POR INTENT...
+    
+    var msg = request.body.msg;//corregir...
+    var id = request.body.sessionId;
+    if(!sessionsIds.has(id)) {
+        //crear perfil.
+        APIAI.queryWithEvent("CREAR_PERFIL", {}, id).then(function(data) {
+            sendBack(data, response);
+        });
+    }
+    var profile = sessionsIds.get(id);
+    APIAI.queryWithEvent("SALUDAR_USER", profile, id).then(function(data){
+        sendBack(data, response);
+    });
+});
+
 app.post('/', function (request, response) {
     var req = request.body.result;
     console.log("Recibi llamada con action", request.body.result.action);
