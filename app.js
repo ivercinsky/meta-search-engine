@@ -7,6 +7,7 @@ const bodyParser = require('body-parser');
 const request = require('request-promise');
 const morgan = require('morgan');
 const APIAI = require('./apiai.js');
+const path    = require("path");
 //console.log(process.argv);
 console.log("USANDO DESPEGAR_API_TOKEN", process.env.DESPEGAR_API_TOKEN, "para comunicarme con Despegar.com");
 
@@ -18,10 +19,11 @@ var jsonParser = bodyParser.json();
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 app.use(morgan('tiny'));
-app.use(function (req, res, next) {
+/*app.use(function (req, res, next) {
     res.setHeader('Content-type', 'application/json')
     next();
-});
+});*/
+app.use(express.static(__dirname + '/views'));
 app.get('/favicon.ico', function (request, response) {
     response.send("hola");
 });
@@ -41,10 +43,15 @@ var sessionsIds = new Map();
 
 function sendBack(data, response) {
     console.log(data);
-    printContexts(data.result);   
+    printContexts(data.result);
+    response.setHeader('Content-type', 'application/json')   
     response.send(data.result);
 
 }
+
+app.get("/", function(request, response) {
+    response.sendFile('index.html');
+});
 
 app.get('/chat', function (request, response) {
     console.log(request.query);
@@ -90,6 +97,7 @@ app.post('/buscar_vuelos', function(request, response) {
     var params = req.parameters;
     Selector.search(params).then(function(data){
         var vuelos = ResultsMerger.merge(data);
+        response.setHeader('Content-type', 'application/json')
         response.send(vuelos);
     });
 })
