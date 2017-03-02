@@ -84,6 +84,15 @@ app.post('/chat', function(request, response){
     });
 });
 
+
+app.post('/buscar_vuelos', function(request, response) {
+    var req = request.body.result;
+    var params = req.parameters;
+    Selector.search(params).then(function(data){
+        var vuelos = ResultsMerger.merge(data);
+        response.send(vuelos);
+    });
+})
 app.post('/', function (request, response) {
     var req = request.body.result;
     console.log("Recibi llamada con action", request.body.result.action);
